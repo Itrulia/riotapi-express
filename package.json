@@ -1,0 +1,26 @@
+{
+  "name": "riotapi-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Itrulia/riotapi-express.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Itrulia/riotapi-express/issues"
+  },
+  "homepage": "https://github.com/Itrulia/riotapi-express#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "promise": "^7.1.1",
+    "q": "^1.4.1",
+    "request": "^2.40.0",
+    "request-promise": "^2.0.0"
+  }
+}
