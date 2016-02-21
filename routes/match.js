@@ -17,6 +17,8 @@ router.get('/:id', function (req, res, next) {
             delete match.participantIdentities;
 
             return match;
+        }).catch(function(err) {
+            console.log(err);
         }));
     });
 

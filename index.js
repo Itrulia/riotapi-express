@@ -20,8 +20,11 @@ app.use(function (err, req, res, next) {
         return next(err);
     }
 
-    res.status(500);
-    res.render('error', {error: err});
+    res.status(err.status);
+    res.send({
+        message: 'Have you tried to turn it off and on again?',
+        error: 'internal_error'
+    });
 });
 
 app.listen(4000, function () {
