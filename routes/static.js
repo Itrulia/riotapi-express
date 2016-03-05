@@ -68,12 +68,11 @@ router.get('/summoner-spell', function (req, res, next) {
 
 router.get('/mastery', function (req, res, next) {
     var gnar = require('../gnarFactory')(req.query.region || 'euw');
-    gnar.lol_static_data.mastery.all({masteryListData: 'image'}).then(function (response) {
-        var masteries = {};
-
-        Object.keys(response.body.data).forEach(function(key) {
-            masteries[response.body.data[key].id] = response.body.data[key];
-        });
+    gnar.lol_static_data.mastery.all({masteryListData: 'image,tree'}).then(function (response) {
+        var masteries = {
+            data: response.body.data,
+            tree:  response.body.tree
+        };
 
         res.send(masteries);
     });
