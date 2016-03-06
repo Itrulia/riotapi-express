@@ -22,8 +22,8 @@ app.use(function (err, req, res, next) {
 
     res.status(err.statusCode);
     res.send({
-        message: 'Have you tried to turn it off and on again?',
-        error: 'internal_error'
+        message: err.message,
+        error: err.statusCode
     });
 });
 
