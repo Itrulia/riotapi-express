@@ -17,10 +17,8 @@ router.get('/:id', function (req, res, next) {
             delete match.participantIdentities;
 
             return match;
-        }).catch(function(err) {
-            console.log(err);
         }));
-    });
+    }).catch(next);
 
     q.all(promises).then(function (matches) {
         if (matches.length === 1) {
@@ -28,7 +26,7 @@ router.get('/:id', function (req, res, next) {
         }
 
         res.send(matches);
-    });
+    }).catch(next);
 });
 
 module.exports = router;

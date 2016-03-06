@@ -63,18 +63,9 @@ module.exports = function gnar(api_key, requested_region) {
         by_summoner: function (ids) {
             return get(api.league + 'by-summoner/' + str(ids));
         },
-        by_team: function (ids) {
-            return get(api.league + 'by-team/' + str(ids));
-        },
-        challenger: function () {
-            return get(api.league + 'challenger');
-        },
         entries: {
             by_summoner: function (ids) {
                 return get(api.league + 'by-summoner/' + str(ids) + '/entry');
-            },
-            by_team: function (ids) {
-                return get(api.league + 'by-team/' + str(ids) + '/entry');
             }
         }
     };
@@ -139,9 +130,6 @@ module.exports = function gnar(api_key, requested_region) {
     exports.stats = {
         ranked: function (id) {
             return get(api.stats + 'by-summoner/' + id + '/ranked');
-        },
-        summary: function (id) {
-            return get(api.stats + 'by-summoner/' + id + '/summary');
         }
     };
 

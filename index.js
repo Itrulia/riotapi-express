@@ -11,7 +11,7 @@ app.use('/static', data);
 
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
-    err.status = 404;
+    err.statusCode = 404;
     next(err);
 });
 
@@ -20,7 +20,7 @@ app.use(function (err, req, res, next) {
         return next(err);
     }
 
-    res.status(err.status);
+    res.status(err.statusCode);
     res.send({
         message: 'Have you tried to turn it off and on again?',
         error: 'internal_error'

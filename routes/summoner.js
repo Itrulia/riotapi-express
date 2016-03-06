@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/:id', function(req, res, next) {
+router.get('/:id', function (req, res, next) {
     var gnar = require('../gnarFactory')(req.query.region || 'euw');
     var request;
 
@@ -11,7 +11,7 @@ router.get('/:id', function(req, res, next) {
         request = gnar.summoner.by_name(req.params.id);
     }
 
-    request.then(function(response) {
+    request.then(function (response) {
         var data = response.body;
         var keys = Object.keys(data);
 
@@ -20,47 +20,47 @@ router.get('/:id', function(req, res, next) {
         } else {
             res.send(data);
         }
-    });
+    }).catch(next);
 });
 
-router.get('/:id/masteries', function(req, res, next) {
+router.get('/:id/masteries', function (req, res, next) {
     var gnar = require('../gnarFactory')(req.query.region || 'euw');
 
-    gnar.summoner.masteries(req.params.id).then(function(response) {
+    gnar.summoner.masteries(req.params.id).then(function (response) {
         res.send(response.body[req.params.id].pages);
-    });
+    }).catch(next);
 });
 
-router.get('/:id/runes', function(req, res, next) {
+router.get('/:id/runes', function (req, res, next) {
     var gnar = require('../gnarFactory')(req.query.region || 'euw');
 
-    gnar.summoner.runes(req.params.id).then(function(response) {
+    gnar.summoner.runes(req.params.id).then(function (response) {
         res.send(response.body[req.params.id].pages);
-    });
+    }).catch(next);
 });
 
-router.get('/:id/matches', function(req, res, next) {
+router.get('/:id/matches', function (req, res, next) {
     var gnar = require('../gnarFactory')(req.query.region || 'euw');
 
-    gnar.matchlist(req.params.id).then(function(response) {
+    gnar.matchlist(req.params.id).then(function (response) {
         res.send(response.body.matches);
-    });
+    }).catch(next);
 });
 
-router.get('/:id/rank', function(req, res, next) {
+router.get('/:id/rank', function (req, res, next) {
     var gnar = require('../gnarFactory')(req.query.region || 'euw');
 
-    gnar.league.by_summoner(req.params.id).then(function(response) {
+    gnar.league.by_summoner(req.params.id).then(function (response) {
         res.send(response.body[req.params.id].pop());
-    });
+    }).catch(next);
 });
 
-router.get('/:id/stats', function(req, res, next) {
+router.get('/:id/stats', function (req, res, next) {
     var gnar = require('../gnarFactory')(req.query.region || 'euw');
 
-    gnar.stats.ranked(req.params.id).then(function(response) {
+    gnar.stats.ranked(req.params.id).then(function (response) {
         res.send(response.body.champions);
-    });
+    }).catch(next);
 });
 
 
