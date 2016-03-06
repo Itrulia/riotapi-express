@@ -78,6 +78,7 @@ router.get('/mastery', function (req, res, next) {
     });
 });
 
+
 router.get('/version', function (req, res, next) {
     var gnar = require('../gnarFactory')(req.query.region || 'euw');
     gnar.lol_static_data.versions().then(function (response) {
