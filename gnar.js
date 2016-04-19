@@ -1,18 +1,31 @@
-module.exports = function gnar(api_key, requested_region) {
+module.exports = function gnar(key, region) {
     var request = require('request-promise');
-    var key = api_key;
-    var region = requested_region;
+
+    var platforms = {
+        'br': 'BR1',
+        'eune': 'EUN1',
+        'euw': 'EUW1',
+        'jp': 'JP1',
+        'kr': 'KR',
+        'lan': 'LA1',
+        'las': 'LA2',
+        'na': 'NA1',
+        'oce': 'OC1',
+        'ru': 'RU',
+        'tr': 'TR1'
+    };
 
     var api = {
-        champion: region + '/v1.2/champion/',
-        game: region + '/v1.3/game/',
-        league: region + '/v2.5/league/',
-        lol_static_data: 'static-data/' + region + '/v1.2/',
-        match: region + '/v2.2/match/',
-        matchlist: region + '/v2.2/matchlist/by-summoner/',
-        stats: region + '/v1.3/stats/',
-        summoner: region + '/v1.4/summoner/',
-        team: region + '/v2.4/team/'
+        champion: 'api/lol/' + region + '/v1.2/champion/',
+        game: 'api/lol/' + region + '/v1.3/game/',
+        league: 'api/lol/' + region + '/v2.5/league/',
+        lol_static_data: 'api/lol/static-data/' + region + '/v1.2/',
+        match: 'api/lol/' + region + '/v2.2/match/',
+        matchlist: 'api/lol/' + region + '/v2.2/matchlist/by-summoner/',
+        stats: 'api/lol/' + region + '/v1.3/stats/',
+        summoner: 'api/lol/' + region + '/v1.4/summoner/',
+        mastery: 'championmastery/location/' + platforms[region.toLowerCase()] + '/player/',
+        team: 'api/lol/' + region + '/v2.4/team/'
     };
 
     function url(endpoint, reg, params) {
@@ -31,7 +44,7 @@ module.exports = function gnar(api_key, requested_region) {
             httpParams.push(key + '=' + params[key]);
         });
 
-        return 'https://' + reg + '.api.pvp.net/api/lol/' + endpoint + '?' + httpParams.join('&');
+        return 'https://' + reg + '.api.pvp.net/' + endpoint + '?' + httpParams.join('&');
     }
 
     function get(endpoint, reg, params) {
@@ -145,6 +158,12 @@ module.exports = function gnar(api_key, requested_region) {
         },
         runes: function (ids) {
             return get(api.summoner + str(ids) + '/runes');
+        }
+    };
+
+    exports.mastery = {
+        champions: function (id) {
+          return get(api.mastery + id + '/champions')
         }
     };
 

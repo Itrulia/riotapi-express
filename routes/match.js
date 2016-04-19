@@ -6,7 +6,8 @@ router.get('/:id', function (req, res, next) {
     var promises = [];
     var gnar = require('../gnarFactory')(req.query.region || 'euw');
 
-    req.params.id.split(',').forEach(function (id) {
+    var ids = req.params.id.split(',');
+    ids.forEach(function (id) {
         promises.push(gnar.match(id).then(function(response) {
             var match = response.body;
 
@@ -17,8 +18,14 @@ router.get('/:id', function (req, res, next) {
             delete match.participantIdentities;
 
             return match;
+        }).catch(function (reason) {
+            if (ids.length === 1) {
+                next(err);
+            }
+
+            return null;
         }));
-    }).catch(next);
+    });
 
     q.all(promises).then(function (matches) {
         if (matches.length === 1) {
@@ -26,7 +33,7 @@ router.get('/:id', function (req, res, next) {
         }
 
         res.send(matches);
-    }).catch(next);
+    });
 });
 
 module.exports = router;
