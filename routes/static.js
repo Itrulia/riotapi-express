@@ -88,6 +88,7 @@ router.get('/version', function (req, res, next) {
 router.get('/realm', function (req, res, next) {
     var gnar = require('../gnarFactory')(req.query.region || 'euw');
     gnar.lol_static_data.realm().then(function (response) {
+        response.body.cdn = response.body.cdn.replace('http:', '');
         res.send(response.body);
     });
 });
