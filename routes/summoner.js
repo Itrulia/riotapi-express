@@ -28,6 +28,19 @@ router.get('/:id/masteries', function (req, res, next) {
     var gnar = gnarFactory(req.query.region || 'euw');
 
     gnar.summoner.masteries(req.params.id).then(function (response) {
+
+        response.body[req.params.id].pages.forEach(function(page, index) {
+            if (typeof page.masteries === 'undefined') return;
+
+            var masteries = {};
+
+            page.masteries.forEach(function (mastery) {
+                masteries[mastery.id] = mastery;
+            });
+
+            response.body[req.params.id].pages[index].masteries = masteries;
+        });
+
         res.send(response.body[req.params.id].pages);
     }).catch(next);
 });
