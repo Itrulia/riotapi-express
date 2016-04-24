@@ -1,5 +1,6 @@
-module.exports = function gnar(key, region) {
+module.exports = function gnar(key, region, rate) {
     var request = require('request-promise');
+    var rateLimit = require('./rateLimit')(rate);
 
     var platforms = {
         'br': 'BR1',
@@ -65,20 +66,28 @@ module.exports = function gnar(key, region) {
 
     exports.champion = {
         all: function () {
-            return get(api.champion);
+            return rateLimit.limit().then(function () {
+                return get(api.champion);
+            });
         },
         by_id: function (id) {
-            return get(api.champion + id);
+            return rateLimit.limit().then(function () {
+                return get(api.champion + id);
+            });
         }
     };
 
     exports.league = {
         by_summoner: function (ids) {
-            return get(api.league + 'by-summoner/' + str(ids));
+            return rateLimit.limit().then(function () {
+                return get(api.league + 'by-summoner/' + str(ids));
+            });
         },
         entries: {
             by_summoner: function (ids) {
-                return get(api.league + 'by-summoner/' + str(ids) + '/entry');
+                return rateLimit.limit().then(function () {
+                    return get(api.league + 'by-summoner/' + str(ids) + '/entry');
+                });
             }
         }
     };
@@ -133,37 +142,53 @@ module.exports = function gnar(key, region) {
     };
 
     exports.match = function (id) {
-        return get(api.match + id, null, {includeTimeline: 'true'});
+        return rateLimit.limit().then(function () {
+            return get(api.match + id, null, {includeTimeline: 'true'});
+        });
     };
 
     exports.matchlist = function (id) {
-        return get(api.matchlist + id, null, {seasons: 'SEASON2016'});
+        return rateLimit.limit().then(function () {
+            return get(api.matchlist + id, null, {seasons: 'SEASON2016'});
+        });
     };
 
     exports.stats = {
         ranked: function (id) {
-            return get(api.stats + 'by-summoner/' + id + '/ranked');
+            return rateLimit.limit().then(function () {
+                return get(api.stats + 'by-summoner/' + id + '/ranked');
+            });
         }
     };
 
     exports.summoner = {
         by_name: function (names) {
-            return get(api.summoner + 'by-name/' + str(names));
+            return rateLimit.limit().then(function () {
+                return get(api.summoner + 'by-name/' + str(names));
+            });
         },
         by_id: function (ids) {
-            return get(api.summoner + str(ids));
+            return rateLimit.limit().then(function () {
+                return get(api.summoner + str(ids));
+            });
         },
         masteries: function (ids) {
-            return get(api.summoner + str(ids) + '/masteries');
+            return rateLimit.limit().then(function () {
+                return get(api.summoner + str(ids) + '/masteries');
+            });
         },
         runes: function (ids) {
-            return get(api.summoner + str(ids) + '/runes');
+            return rateLimit.limit().then(function () {
+                return get(api.summoner + str(ids) + '/runes');
+            });
         }
     };
 
     exports.mastery = {
         champions: function (id) {
-          return get(api.mastery + id + '/champions')
+            return rateLimit.limit().then(function () {
+                return get(api.mastery + id + '/champions')
+            });
         }
     };
 

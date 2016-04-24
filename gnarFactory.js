@@ -6,5 +6,5 @@ module.exports = function(region) {
         region = 'EUW';
     }
 
-    return gnar(env.api_key, region.toLowerCase());
+    return gnar(env.api_key, region.toLowerCase(), env.rate);
 };
