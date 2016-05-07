@@ -27,17 +27,18 @@ router.get('/champion', function (req, res, next) {
     }).catch(next);
 });
 
-router.get('/item', function (req, res, next) {
+router.get('/item/:version', function (req, res, next) {
     var gnar = require('../gnarFactory')(req.query.region || 'euw');
-    gnar.lol_static_data.item.all({itemListData: 'image'}).then(function (response) {
-        var items = {};
+    gnar.lol_static_data.item.all({itemListData: 'image', version: req.params.version})
+        .then(function (response) {
+            var items = {};
 
-        Object.keys(response.body.data).forEach(function (key) {
-            items[response.body.data[key].id] = response.body.data[key];
-        });
+            Object.keys(response.body.data).forEach(function (key) {
+                items[response.body.data[key].id] = response.body.data[key];
+            });
 
-        res.send(items);
-    }).catch(next);
+            res.send(items);
+        }).catch(next);
 });
 
 router.get('/rune', function (req, res, next) {
@@ -89,6 +90,13 @@ router.get('/realm', function (req, res, next) {
     var gnar = require('../gnarFactory')(req.query.region || 'euw');
     gnar.lol_static_data.realm().then(function (response) {
         response.body.cdn = response.body.cdn.replace('http:', '');
+        res.send(response.body);
+    });
+});
+
+router.get('/versions', function (req, res, next) {
+    var gnar = require('../gnarFactory')(req.query.region || 'euw');
+    gnar.lol_static_data.versions().then(function (response) {
         res.send(response.body);
     });
 });

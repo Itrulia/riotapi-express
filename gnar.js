@@ -120,6 +120,9 @@ module.exports = function gnar(key, region, rate) {
         realm: function () {
             return get(api.lol_static_data + 'realm', 'global');
         },
+        versions: function () {
+            return get(api.lol_static_data + 'versions', 'global');
+        },
         rune: {
             all: function (params) {
                 return get(api.lol_static_data + 'rune', 'global', params);
