@@ -66,12 +66,12 @@ module.exports = function gnar(key, region, rate) {
 
     exports.champion = {
         all: function () {
-            return rateLimit.limit().then(function () {
+            return rateLimit.limit(region).then(function () {
                 return get(api.champion);
             });
         },
         by_id: function (id) {
-            return rateLimit.limit().then(function () {
+            return rateLimit.limit(region).then(function () {
                 return get(api.champion + id);
             });
         }
@@ -79,13 +79,13 @@ module.exports = function gnar(key, region, rate) {
 
     exports.league = {
         by_summoner: function (ids) {
-            return rateLimit.limit().then(function () {
+            return rateLimit.limit(region).then(function () {
                 return get(api.league + 'by-summoner/' + str(ids));
             });
         },
         entries: {
             by_summoner: function (ids) {
-                return rateLimit.limit().then(function () {
+                return rateLimit.limit(region).then(function () {
                     return get(api.league + 'by-summoner/' + str(ids) + '/entry');
                 });
             }
@@ -145,20 +145,20 @@ module.exports = function gnar(key, region, rate) {
     };
 
     exports.match = function (id) {
-        return rateLimit.limit().then(function () {
+        return rateLimit.limit(region).then(function () {
             return get(api.match + id, null, {includeTimeline: 'true'});
         });
     };
 
     exports.matchlist = function (id) {
-        return rateLimit.limit().then(function () {
+        return rateLimit.limit(region).then(function () {
             return get(api.matchlist + id, null, {seasons: 'SEASON2016'});
         });
     };
 
     exports.stats = {
         ranked: function (id) {
-            return rateLimit.limit().then(function () {
+            return rateLimit.limit(region).then(function () {
                 return get(api.stats + 'by-summoner/' + id + '/ranked');
             });
         }
@@ -166,22 +166,22 @@ module.exports = function gnar(key, region, rate) {
 
     exports.summoner = {
         by_name: function (names) {
-            return rateLimit.limit().then(function () {
+            return rateLimit.limit(region).then(function () {
                 return get(api.summoner + 'by-name/' + str(names));
             });
         },
         by_id: function (ids) {
-            return rateLimit.limit().then(function () {
+            return rateLimit.limit(region).then(function () {
                 return get(api.summoner + str(ids));
             });
         },
         masteries: function (ids) {
-            return rateLimit.limit().then(function () {
+            return rateLimit.limit(region).then(function () {
                 return get(api.summoner + str(ids) + '/masteries');
             });
         },
         runes: function (ids) {
-            return rateLimit.limit().then(function () {
+            return rateLimit.limit(region).then(function () {
                 return get(api.summoner + str(ids) + '/runes');
             });
         }
@@ -189,7 +189,7 @@ module.exports = function gnar(key, region, rate) {
 
     exports.mastery = {
         champions: function (id) {
-            return rateLimit.limit().then(function () {
+            return rateLimit.limit(region).then(function () {
                 return get(api.mastery + id + '/champions')
             });
         }
